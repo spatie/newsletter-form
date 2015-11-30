@@ -29,7 +29,7 @@ npm install spatie-custom/newsletter-form
 const newsletterForm = require('newsletter-form');
 
 // Default options
-let options: {
+let options= {
     form: $('[data-newsletter]'),
     email: $('[data-newsletter-email]'),
     response: {
