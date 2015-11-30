@@ -4,10 +4,7 @@
 [![Build Status](https://img.shields.io/travis/spatie-custom/newsletter-form/master.svg?style=flat-square)](https://travis-ci.org/spatie-custom/newsletter-form)
 [![Code Climate](https://img.shields.io/codeclimate/github/spatie-custom/newsletter-form.svg?style=flat-square)](https://img.shields.io/codeclimate/github/spatie-custom/newsletter-form.svg)
 
-
 Client-side handling of newsletter subscriptions via ajax. Validates email and shows server response.
-
-Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
 
 ## Install
 
@@ -76,12 +73,6 @@ newsletterForm.init(options);
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
-
-## Testing
-
-``` bash
-$ npm run test
-```
 
 ## Contributing
 
