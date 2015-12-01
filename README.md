@@ -45,7 +45,7 @@ let options= {
     },
 }
 
-new NewsletterForm.init(options);
+new NewsletterForm(options);
 ```
 
 ```html
