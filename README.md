@@ -25,7 +25,7 @@ npm install spatie-custom/newsletter-form
 ## Usage
 
 ```es6
-const NewsletterForm = require('newsletter-form');
+import NewsletterForm from 'newsletter-form';
 
 // Default options
 let options= {
