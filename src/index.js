@@ -39,7 +39,7 @@ module.exports = {
             nf._resetResponse();
 
             if(! validator.validate(nf.email.val())){
-                nf._respond(nf.response.element.data('newsletter-error-email'), 'error');
+                nf._respond(nf.response.element.data('newsletter-error-email') || 'Email error without message', 'error');
                 return false;
             }
 
@@ -48,10 +48,10 @@ module.exports = {
                 data: nf.form.serialize(),
                 url: nf.form.attr('action'),
                 success: function(ajaxResponse) {
-                    nf._respond(ajaxResponse[nf.response.keys.message], ajaxResponse[nf.response.keys.type]);
+                    nf._respond(ajaxResponse[nf.response.keys.message] || 'Ajax success without message', ajaxResponse[nf.response.keys.type] || 'error');
                 },
                 error: function() {
-                    nf._respond(nf.response.element.data('newsletter-error-ajax'), 'error');
+                    nf._respond(nf.response.element.data('newsletter-error-ajax') || 'Ajax error without message', 'error');
                 },
             });
         });
