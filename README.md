@@ -36,11 +36,12 @@ let options= {
         element: $('[data-newsletter-message]'),
         cssClass: {
             error: '-error',
+            info: '-info',
             success: '-success',
         },
         keys: {
             message: 'message',
-            success: 'success'
+            type: 'type'
         },
     },
 }
