@@ -8,7 +8,7 @@ class NewsletterForm {
      * @param {object} options
      * @param {JQuery} options.form
      * @param {JQuery} options.email
-     * @param {options} options.response
+     * @param {object} options.response
      */
     constructor({form, email, response}) {
         this.form = form || $('[data-newsletter]');

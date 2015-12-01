@@ -22,7 +22,6 @@ Or you can require the package straight from Github:
 npm install spatie-custom/newsletter-form
 ```
 
-
 ## Usage
 
 ```es6
@@ -63,6 +62,7 @@ new NewsletterForm.init(options);
 ```
 
 ### Expected server response
+
 ```js
 // All Good
 { message: "Subscription is done", type: 'success' }
