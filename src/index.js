@@ -10,7 +10,7 @@ class NewsletterForm {
      * @param {JQuery} options.email
      * @param {object} options.message
      */
-    constructor({form, email, message}) {
+    constructor({form, email, message} = {}) {
         this.form = form || $('[data-newsletter]');
         this.email = email || $('[data-newsletter-email]');
         this.message = merge({
@@ -53,14 +53,14 @@ class NewsletterForm {
                 type: 'POST',
                 data: this.form.serialize(),
                 url: this.form.attr('action'),
-                success:  (ajaxResponse) => {
+                success:  ajaxResponse => {
                     messageParameters.responseText = ajaxResponse[this.message.jsonKeys.responseText] || 'Ajax success without message';
                     messageParameters.responseType = ajaxResponse[this.message.jsonKeys.responseType];
                 },
-                error: function () {
+                error: () => {
                     messageParameters.responseText = this.message.element.data('newsletter-error-ajax') || 'Ajax error without message';
                 },
-                complete: function() {
+                complete: () => {
                     this.showMessage(messageParameters.responseText, messageParameters.responseType || 'error');
                 },
             });
