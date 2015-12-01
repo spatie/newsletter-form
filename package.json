@@ -2,7 +2,7 @@
   "name": "newsletter-form",
   "version": "1.0.0",
   "description": "Client-side script for newsletter subscription and response messages",
-  "main": "lib/newsletter-form.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "gulp test",
     "prepublish": "gulp test && gulp build"

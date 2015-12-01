@@ -10,21 +10,23 @@ module.exports = {
         element: $('[data-newsletter-message]'),
         cssClass: {
             error: '-error',
+            info: '-info',
             success: '-success',
         },
         keys: {
             message: 'message',
-            success: 'success',
+            type: 'type',
         },
     },
     _resetResponse() {
-        this.response.element.removeClass(this.response.cssClass.join(' '))
+        this.response.element.removeClass(Array.from(this.response.cssClass).join(' '))
+                             .html('')
                              .hide();
         return this;
     },
-    _respond(message, success) {
+    _respond(message, type) {
         this.response.element.html(message)
-                             .addClass(this.response.cssClass[success? 'success' : 'error'])
+                             .addClass(this.response.cssClass[type])
                              .show();
         return this;
     },
@@ -37,7 +39,7 @@ module.exports = {
             nf._resetResponse();
 
             if(! validator.validate(nf.email.val())){
-                nf._respond(nf.response.element.data('newsletter-error-email'), false);
+                nf._respond(nf.response.element.data('newsletter-error-email'), 'error');
                 return false;
             }
 
@@ -46,10 +48,10 @@ module.exports = {
                 data: nf.form.serialize(),
                 url: nf.form.attr('action'),
                 success: function(ajaxResponse) {
-                    nf._respond(ajaxResponse[nf.response.keys.message], ajaxResponse[nf.response.keys.success]);
+                    nf._respond(ajaxResponse[nf.response.keys.message], ajaxResponse[nf.response.keys.type]);
                 },
                 error: function() {
-                    nf._respond(nf.response.element.data('newsletter-error-ajax'), false);
+                    nf._respond(nf.response.element.data('newsletter-error-ajax'), 'error');
                 },
             });
         });
@@ -61,5 +63,7 @@ module.exports = {
 
         this._resetResponse()
             ._initHandler();
+
+        return this;
     },
 };

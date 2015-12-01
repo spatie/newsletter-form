@@ -64,10 +64,13 @@ newsletterForm.init(options);
 ### Expected server response
 ```js
 // All Good
-{ message: "Subscription is done", success: true }
+{ message: "Subscription is done", type: 'success' }
+
+// Warning 
+{ message: "Already subscribed", type: 'info' }
 
 // No Good
-{ message: "Newsletter database is down", success: false }
+{ message: "Newsletter database is down", type: 'error' }
 ```
 
 ## Change log
