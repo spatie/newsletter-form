@@ -31,16 +31,16 @@ const NewsletterForm = require('newsletter-form');
 let options= {
     form: $('[data-newsletter]'),
     email: $('[data-newsletter-email]'),
-    response: {
+    message: {
         element: $('[data-newsletter-message]'),
         cssClass: {
             error: '-error',
             info: '-info',
             success: '-success',
         },
-        keys: {
-            message: 'message',
-            type: 'type'
+        jsonKeys: {
+            responseText: 'responseText',
+            responseType: 'responseType'
         },
     },
 }
@@ -92,6 +92,7 @@ If you discover any security related issues, please contact [Willem Van Bockstal
 - [All Contributors](../../contributors)
 
 ## About Spatie
+
 Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
 
 ## License

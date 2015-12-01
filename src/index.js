@@ -8,57 +8,60 @@ class NewsletterForm {
      * @param {object} options
      * @param {JQuery} options.form
      * @param {JQuery} options.email
-     * @param {object} options.response
+     * @param {object} options.message
      */
-    constructor({form, email, response}) {
+    constructor({form, email, message}) {
         this.form = form || $('[data-newsletter]');
         this.email = email || $('[data-newsletter-email]');
-        this.responseMessage = merge({
+        this.message = merge({
             element: $('[data-newsletter-message]'),
             cssClass: {
                 error: '-error',
-                ithiso: '-ithiso',
+                info: '-info',
                 success: '-success',
             },
-            keys: {
-                message: 'message',
-                type: 'type',
+            jsonKeys: {
+                responseText: 'responseText',
+                responseType: 'responseType',
             },
-        }, response);
+        }, message);
 
-        this.resetResponseMessage()
+        this.resetMessage()
             .startSubmitListener();
     }
 
     /**
      * Start listening for submit events.
      *
+     * @protected
+     *
      * @returns {NewsletterForm}
      */
     startSubmitListener() {
         this.form.on('submit', (event) => {
             event.preventDefault();
-            this.resetResponseMessage();
+            this.resetMessage();
 
             if (!validator.validate(this.email.val())) {
-                this.respondWithMessage(this.responseMessage.element.data('newsletter-error-email') || 'Email error without message', 'error');
+                this.showMessage(this.message.element.data('newsletter-error-email') || 'Email error without message', 'error');
                 return false;
             }
+
+            let messageParameters = {};
 
             $.ajax({
                 type: 'POST',
                 data: this.form.serialize(),
                 url: this.form.attr('action'),
                 success:  (ajaxResponse) => {
-                    let message = ajaxResponse[this.responseMessage.keys.message] || 'Ajax success without message';
-                    let responseType = ajaxResponse[this.responseMessage.keys.type] || 'error';
-
-                    this.respondWithMessage(message, responseType);
+                    messageParameters.responseText = ajaxResponse[this.message.jsonKeys.responseText] || 'Ajax success without message';
+                    messageParameters.responseType = ajaxResponse[this.message.jsonKeys.responseType];
                 },
                 error: function () {
-                    let message = this.responseMessage.element.data('newsletter-error-ajax') || 'Ajax error without message';
-
-                    this.respondWithMessage(message, 'error');
+                    messageParameters.responseText = this.message.element.data('newsletter-error-ajax') || 'Ajax error without message';
+                },
+                complete: function() {
+                    this.showMessage(messageParameters.responseText, messageParameters.responseType || 'error');
                 },
             });
         });
@@ -66,18 +69,21 @@ class NewsletterForm {
         return this;
     }
 
+
     /**
      * Display a message.
      *
-     * @param {string} message
+     * @protected
+     *
+     * @param {string} text
      * @param {string} type
      *
      * @returns {NewsletterForm}
      */
-    respondWithMessage(message, type) {
-        this.responseMessage.element
-            .html(message)
-            .addClass(this.responseMessage.cssClass[type])
+    showMessage(text, type) {
+        this.message.element
+            .html(text)
+            .addClass(this.message.cssClass[type])
             .show();
         return this;
     }
@@ -85,11 +91,13 @@ class NewsletterForm {
     /**
      * Hide the message.
      *
+     * @protected
+     *
      * @returns {NewsletterForm}
      */
-    resetResponseMessage() {
-        this.responseMessage.element
-            .removeClass(Array.from(this.responseMessage.cssClass).join(' '))
+    resetMessage() {
+        this.message.element
+            .removeClass(Array.from(this.message.cssClass).join(' '))
             .html('')
             .hide();
         return this;
