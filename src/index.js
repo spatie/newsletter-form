@@ -4,6 +4,12 @@ const merge = require('lodash.merge');
 
 class NewsletterForm {
 
+    /**
+     * @param {object} options
+     * @param {JQuery} options.form
+     * @param {JQuery} options.email
+     * @param {options} options.response
+     */
     constructor({form, email, response}) {
         this.form = form || $('[data-newsletter]');
         this.email = email || $('[data-newsletter-email]');
@@ -21,26 +27,15 @@ class NewsletterForm {
         }, response);
 
         this.resetResponseMessage()
-            .initHandler();
+            .startSubmitListener();
     }
 
-    resetResponseMessage() {
-        this.responseMessage.element
-            .removeClass(Array.from(this.responseMessage.cssClass).join(' '))
-            .html('')
-            .hide();
-        return this;
-    }
-
-    respondWithMessage(message, type) {
-        this.responseMessage.element
-            .html(message)
-            .addClass(this.responseMessage.cssClass[type])
-            .show();
-        return this;
-    }
-
-    initHandler() {
+    /**
+     * Start listening for submit events.
+     *
+     * @returns {NewsletterForm}
+     */
+    startSubmitListener() {
         this.form.on('submit', (event) => {
             event.preventDefault();
             this.resetResponseMessage();
@@ -68,6 +63,35 @@ class NewsletterForm {
             });
         });
 
+        return this;
+    }
+
+    /**
+     * Display a message.
+     *
+     * @param {string} message
+     * @param {string} type
+     *
+     * @returns {NewsletterForm}
+     */
+    respondWithMessage(message, type) {
+        this.responseMessage.element
+            .html(message)
+            .addClass(this.responseMessage.cssClass[type])
+            .show();
+        return this;
+    }
+
+    /**
+     * Hide the message.
+     *
+     * @returns {NewsletterForm}
+     */
+    resetResponseMessage() {
+        this.responseMessage.element
+            .removeClass(Array.from(this.responseMessage.cssClass).join(' '))
+            .html('')
+            .hide();
         return this;
     }
 }
