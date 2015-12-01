@@ -1,69 +1,75 @@
 const $ = require('jquery');
 const validator = require('email-validator');
-const _merge = require('lodash.merge');
+const merge = require('lodash.merge');
 
-// the object
-module.exports = {
-    form: $('[data-newsletter]'),
-    email: $('[data-newsletter-email]'),
-    response: {
-        element: $('[data-newsletter-message]'),
-        cssClass: {
-            error: '-error',
-            info: '-info',
-            success: '-success',
-        },
-        keys: {
-            message: 'message',
-            type: 'type',
-        },
-    },
-    _resetResponse() {
-        this.response.element.removeClass(Array.from(this.response.cssClass).join(' '))
-                             .html('')
-                             .hide();
+class NewsletterForm {
+
+    constructor({form, email, response}) {
+        this.form = form || $('[data-newsletter]');
+        this.email = email || $('[data-newsletter-email]');
+        this.responseMessage = merge({
+            element: $('[data-newsletter-message]'),
+            cssClass: {
+                error: '-error',
+                ithiso: '-ithiso',
+                success: '-success',
+            },
+            keys: {
+                message: 'message',
+                type: 'type',
+            },
+        }, response);
+
+        this.resetResponseMessage()
+            .initHandler();
+    }
+
+    resetResponseMessage() {
+        this.responseMessage.element
+            .removeClass(Array.from(this.responseMessage.cssClass).join(' '))
+            .html('')
+            .hide();
         return this;
-    },
-    _respond(message, type) {
-        this.response.element.html(message)
-                             .addClass(this.response.cssClass[type])
-                             .show();
+    }
+
+    respondWithMessage(message, type) {
+        this.responseMessage.element
+            .html(message)
+            .addClass(this.responseMessage.cssClass[type])
+            .show();
         return this;
-    },
-    _initHandler() {
+    }
 
-        let nf = this;
-
-        this.form.on('submit', function(event) {
+    initHandler() {
+        this.form.on('submit', (event) => {
             event.preventDefault();
-            nf._resetResponse();
+            this.resetResponseMessage();
 
-            if(! validator.validate(nf.email.val())){
-                nf._respond(nf.response.element.data('newsletter-error-email') || 'Email error without message', 'error');
+            if (!validator.validate(this.email.val())) {
+                this.respondWithMessage(this.responseMessage.element.data('newsletter-error-email') || 'Email error without message', 'error');
                 return false;
             }
 
             $.ajax({
                 type: 'POST',
-                data: nf.form.serialize(),
-                url: nf.form.attr('action'),
-                success: function(ajaxResponse) {
-                    nf._respond(ajaxResponse[nf.response.keys.message] || 'Ajax success without message', ajaxResponse[nf.response.keys.type] || 'error');
+                data: this.form.serialize(),
+                url: this.form.attr('action'),
+                success:  (ajaxResponse) => {
+                    let message = ajaxResponse[this.responseMessage.keys.message] || 'Ajax success without message';
+                    let responseType = ajaxResponse[this.responseMessage.keys.type] || 'error';
+
+                    this.respondWithMessage(message, responseType);
                 },
-                error: function() {
-                    nf._respond(nf.response.element.data('newsletter-error-ajax') || 'Ajax error without message', 'error');
+                error: function () {
+                    let message = this.responseMessage.element.data('newsletter-error-ajax') || 'Ajax error without message';
+
+                    this.respondWithMessage(message, 'error');
                 },
             });
         });
 
         return this;
-    },
-    init(options) {
-        _merge(this, options);
+    }
+}
 
-        this._resetResponse()
-            ._initHandler();
-
-        return this;
-    },
-};
+export default NewsletterForm;
