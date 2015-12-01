@@ -9,7 +9,7 @@ Client-side handling of newsletter subscriptions via ajax. Validates email and s
 ## Install
 
 This package is custom built for [Spatie](https://spatie.be) projects and is therefore not registered on npm.
-In order to install it via npm you have to go through out registry:
+In order to install it via npm you have to go through our registry:
 
 ```bash
 npm set registry https://npm.spatie.be
