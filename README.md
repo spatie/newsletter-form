@@ -38,33 +38,37 @@ The first step is to create a form that looks like this:
 </div>
 ```
 
-If you're using the defaults, the easiest way to use the component is to call the `init` function.
+If you're using the defaults, the easiest way to use the component is to just new it up.
 
 ```es6
 const NewsletterForm = require('newsletter-form');
 
-NewsletterForm.init();
+new NewsletterForm();
 ```
 
-Want to use some other form elements? Just pass them to the constructor.
+Wanna do something special? You can customize the behaviour by passing one or more of these options:
 
 ```es6
-const myElements = {
-    form: $('[data-newsletter-custom-form]'),
-    email: $('[data-newsletter-custom-email]'),
-    message: $('[data-newsletter-message]'),
+const options = {
+    $form: $('[data-newsletter-custom-form]'),
+    $email: $('[data-newsletter-custom-email]'),
+    $message: $('[data-newsletter-message]'),
+    responseKeys: {message: "customMessageField", type: "customTypeField"},
+    cssClasses: {error: "-custom-error", success: "-custom-success"},
 };
 
-NewsletterForm.init(myElements);
+new NewsletterForm(options);
 ```
 
 The used css classes and expected repsonse keys can also be changed:
 
 ```es6
-NewsletterForm.init(myElements)
-              .setResponseKeys({message: "customMessageField", type: "customTypeField"})
-              .setCssClasses({error: "-custom-error", success: "-custom-success"})
-;
+const options = {
+    responseKeys: {message: "customMessageField", type: "customTypeField"},
+    cssClasses: {error: "-custom-error", success: "-custom-success"},
+};
+
+new NewsletterForm(options);
 ```
 
 ### Expected server response
