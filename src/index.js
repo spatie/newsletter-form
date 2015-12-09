@@ -89,7 +89,7 @@ class NewsletterForm {
                 type: 'POST',
                 data: this.$form.serialize(),
                 url: this.$form.attr('action'),
-                success:  (ajaxResponse) => {
+                success: ajaxResponse => {
                     responseProperties.message = ajaxResponse[this.responseKeys.message] || 'Ajax success without message';
                     responseProperties.type = ajaxResponse[this.responseKeys.message] || 'error';
                 },
