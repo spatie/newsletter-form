@@ -15,19 +15,19 @@ class NewsletterForm {
         this.$email = $email || $('[data-newsletter-email]');
         this.$message = $message || $('[data-newsletter-message]'),
 
-            this.responseKeys =   {
-                message: 'message',
-                type: 'type',
-            },
+        this.responseKeys =   {
+            message: 'message',
+            type: 'type',
+        },
 
-            this.cssClasses = {
-                success: '-success',
-                info: '-info',
-                error: '-error',
-            },
+        this.cssClasses = {
+            success: '-success',
+            info: '-info',
+            error: '-error',
+        },
 
-            this.resetMessage()
-                .startSubmitListener();
+        this.resetMessage()
+            .startSubmitListener();
     }
 
     /**
@@ -67,7 +67,6 @@ class NewsletterForm {
 
         return this;
     }
-
 
     /**
      * Start listening for submit events.
