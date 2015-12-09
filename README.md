@@ -16,7 +16,7 @@ npm set registry https://npm.spatie.be
 npm set ca null
 ```
 
-Or you can require the package straight from Github:
+Or you can require the package straight from GitHub:
 
 ```bash
 npm install spatie-custom/newsletter-form
@@ -24,7 +24,8 @@ npm install spatie-custom/newsletter-form
 
 ## Usage
 
-First step is to create a form that looks like this
+The first step is to create a form that looks like this:
+
 ```html
 <form data-newsletter method="POST" action="...">
     <input data-newsletter-email type="email">
@@ -33,29 +34,28 @@ First step is to create a form that looks like this
 
 <div data-newsletter-message 
      data-newsletter-error-email="No valid email" 
-     data-newsletter-error-ajax="Submission failed" 
->
+     data-newsletter-error-ajax="Submission failed">
 </div>
 ```
 
-If you're using all defaults that the easiest way to use the component is to just new it up.
+If you're using the defaults, the easiest way to use the component is to call the `init` function.
 
 ```es6
 const NewsletterForm = require('newsletter-form');
 
-new NewsletterForm();
+NewsletterForm.init();
 ```
 
 Want to use some other form elements? Just pass them to the constructor.
 
 ```es6
-let myElements = {
+const myElements = {
     form: $('[data-newsletter-custom-form]'),
     email: $('[data-newsletter-custom-email]'),
     message: $('[data-newsletter-message]'),
-}
+};
 
-new NewsletterForm(myElements);
+NewsletterForm.init(myElements);
 ```
 
 The used css classes and expected repsonse keys can also be changed:
@@ -69,7 +69,7 @@ NewsletterForm.init(myElements)
 
 ### Expected server response
 
-If you're using the default response keys a json response with these keys is expected from the server:
+If you're using the default response keys, a json response with these keys is expected from the server:
 
 ```js
 // All Good
@@ -82,7 +82,7 @@ If you're using the default response keys a json response with these keys is exp
 {"message":"Newsletter database is down", "type":"error"}
 ```
 
-## Change log
+## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
