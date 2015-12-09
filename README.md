@@ -63,7 +63,7 @@ The used css classes and expected repsonse keys can also be changed:
 ```es6
 NewsletterForm.init(myElements)
               .setResponseKeys({message: "customMessageField", type: "customTypeField"})
-              .setCssClasses({error: "-custom-error, success: "-custom-success"})
+              .setCssClasses({error: "-custom-error", success: "-custom-success"})
 ;
 ```
 
