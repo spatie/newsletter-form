@@ -15,7 +15,7 @@ class NewsletterForm {
         this.$email = $email || $('[data-newsletter-email]');
         this.$message = $message || $('[data-newsletter-message]'),
 
-        this.responseKeys =   {
+        this.responseKeys = {
             message: 'message',
             type: 'type',
         },
