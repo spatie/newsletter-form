@@ -138,7 +138,7 @@ class NewsletterForm {
      */
     getAllCssClasses() {
         return Object.keys(this.cssClasses)
-            .map( key => this.cssClasses[key])
+            .map(key => this.cssClasses[key])
             .join(' ');
     }
 }
