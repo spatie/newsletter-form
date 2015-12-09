@@ -118,6 +118,7 @@ class NewsletterForm {
             .html(message)
             .addClass(this.cssClasses[type])
             .show();
+            
         return this;
     }
 
@@ -131,6 +132,7 @@ class NewsletterForm {
             .removeClass(Array.from(this.cssClasses).join(' '))
             .html('')
             .hide();
+            
         return this;
     }
 }
