@@ -5,63 +5,100 @@ const merge = require('lodash.merge');
 class NewsletterForm {
 
     /**
-     * @param {object} options
-     * @param {JQuery} options.form
-     * @param {JQuery} options.email
-     * @param {object} options.message
+     * @param {object} htmlElements
+     * @param {JQuery} htmlElements.form
+     * @param {JQuery} htmlElements.email
+     * @param {JQuery} htmlElements.message
      */
-    constructor({form, email, message} = {}) {
-        this.form = form || $('[data-newsletter]');
-        this.email = email || $('[data-newsletter-email]');
-        this.message = merge({
-            element: $('[data-newsletter-message]'),
-            cssClass: {
-                error: '-error',
-                info: '-info',
-                success: '-success',
-            },
-            jsonKeys: {
-                responseText: 'responseText',
-                responseType: 'responseType',
-            },
-        }, message);
+    constructor({$form, $email, $message}) {
+        this.$form = $form || $('[data-newsletter]');
+        this.$email = $email || $('[data-newsletter-email]');
+        this.$message = $message || $('[data-newsletter-message]'),
 
-        this.resetMessage()
-            .startSubmitListener();
+            this.responseKeys =   {
+                message: 'message',
+                type: 'type',
+            },
+
+            this.cssClasses = {
+                success: '-success',
+                info: '-info',
+                error: '-error',
+            },
+
+            this.resetMessage()
+                .startSubmitListener();
     }
+
+    /**
+     * @param {object} htmlElements
+     * @param {JQuery} htmlElements.form
+     * @param {JQuery} htmlElements.email
+     * @param {JQuery} htmlElements.message
+     */
+    static init(htmlElements) {
+        return new NewsletterForm(htmlElements);
+    }
+
+    /**
+     * @param {object} responseKeys
+     * @param {string} responseKeys.message
+     * @param {string} responseKeys.type
+     *
+     * @return NewsletterForm
+     */
+    setResponseKeys(responseKeys) {
+        this.responseKeys = merge(this.responseKeys, responseKeys);
+
+        return this;
+    }
+
+    /**
+     * @param {object} cssClasses
+     *
+     * @param {string} cssClasses.info
+     * @param {string} cssClasses.success
+     * @param {string} cssClasses.error
+     *
+     * @return NewsletterForm
+     */
+    setCssClasses(cssClasses) {
+        this.cssClasses = merge(this.cssClasses, cssClasses);
+
+        return this;
+    }
+
 
     /**
      * Start listening for submit events.
      *
-     * @protected
-     *
      * @returns {NewsletterForm}
      */
     startSubmitListener() {
-        this.form.on('submit', (event) => {
+        this.$form.on('submit', (event) => {
             event.preventDefault();
             this.resetMessage();
 
-            if (!validator.validate(this.email.val())) {
-                this.showMessage(this.message.element.data('newsletter-error-email') || 'Email error without message', 'error');
+            if (!validator.validate(this.$email.val())) {
+                this.showMessage(this.$message.data('newsletter-error-email') || 'Email error without message', 'error');
                 return false;
             }
 
-            let messageParameters = {};
+            let responseProperties = {};
 
             $.ajax({
                 type: 'POST',
-                data: this.form.serialize(),
-                url: this.form.attr('action'),
-                success:  ajaxResponse => {
-                    messageParameters.responseText = ajaxResponse[this.message.jsonKeys.responseText] || 'Ajax success without message';
-                    messageParameters.responseType = ajaxResponse[this.message.jsonKeys.responseType];
+                data: this.$form.serialize(),
+                url: this.$form.attr('action'),
+                success:  (ajaxResponse) => {
+                    responseProperties.message = ajaxResponse[this.responseKeys.message] || 'Ajax success without message';
+                    responseProperties.type = ajaxResponse[this.responseKeys.message] || 'error';
                 },
-                error: () => {
-                    messageParameters.responseText = this.message.element.data('newsletter-error-ajax') || 'Ajax error without message';
+                error: function () {
+                    responseProperties.message = this.$message.data('newsletter-error-ajax') || 'Ajax error without message';
                 },
                 complete: () => {
-                    this.showMessage(messageParameters.responseText, messageParameters.responseType || 'error');
+                    this.showMessage(responseProperties.message, responseProperties.type || 'error');
                 },
             });
         });
@@ -69,21 +106,18 @@ class NewsletterForm {
         return this;
     }
 
-
     /**
      * Display a message.
      *
-     * @protected
-     *
-     * @param {string} text
+     * @param {string} message
      * @param {string} type
      *
      * @returns {NewsletterForm}
      */
-    showMessage(text, type) {
-        this.message.element
-            .html(text)
-            .addClass(this.message.cssClass[type])
+    showMessage(message, type) {
+        this.$message
+            .html(message)
+            .addClass(this.cssClasses[type])
             .show();
         return this;
     }
@@ -91,13 +125,11 @@ class NewsletterForm {
     /**
      * Hide the message.
      *
-     * @protected
-     *
      * @returns {NewsletterForm}
      */
     resetMessage() {
-        this.message.element
-            .removeClass(Array.from(this.message.cssClass).join(' '))
+        this.$message
+            .removeClass(Array.from(this.cssClasses).join(' '))
             .html('')
             .hide();
         return this;

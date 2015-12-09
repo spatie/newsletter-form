@@ -6,7 +6,7 @@
 
 Client-side handling of newsletter subscriptions via ajax. Validates email and shows server response.
 
-## Install
+## Installation
 
 This package is custom built for [Spatie](https://spatie.be) projects and is therefore not registered on npm.
 In order to install it via npm you have to go through our registry:
@@ -24,30 +24,7 @@ npm install spatie-custom/newsletter-form
 
 ## Usage
 
-```es6
-import NewsletterForm from 'newsletter-form';
-
-// Default options
-let options= {
-    form: $('[data-newsletter]'),
-    email: $('[data-newsletter-email]'),
-    message: {
-        element: $('[data-newsletter-message]'),
-        cssClass: {
-            error: '-error',
-            info: '-info',
-            success: '-success',
-        },
-        jsonKeys: {
-            responseText: 'responseText',
-            responseType: 'responseType'
-        },
-    },
-}
-
-new NewsletterForm(options);
-```
-
+First step is to create a form that looks like this
 ```html
 <form data-newsletter method="POST" action="...">
     <input data-newsletter-email type="email">
@@ -61,17 +38,48 @@ new NewsletterForm(options);
 </div>
 ```
 
+If you're using all defaults that the easiest way to use the component is to just new it up.
+
+```es6
+const NewsletterForm = require('newsletter-form');
+
+new NewsletterForm();
+```
+
+Want to use some other form elements? Just pass them to the constructor.
+
+```es6
+let myElements = {
+    form: $('[data-newsletter-custom-form]'),
+    email: $('[data-newsletter-custom-email]'),
+    message: $('[data-newsletter-message]'),
+}
+
+new NewsletterForm(myElements);
+```
+
+The used css classes and expected repsonse keys can also be changed:
+
+```es6
+NewsletterForm.init(myElements)
+              .setResponseKeys({message: 'customMessageField', type: "customTypeField"})
+              .setCssClasses({error: "-custom-error, success: "-custom-success"})
+  ;
+```
+
 ### Expected server response
+
+If you're using the default response keys a json response with these keys is expected from the server:
 
 ```js
 // All Good
-{ message: "Subscription is done", type: 'success' }
+{ "message": "Subscription is done", "type": "success" }
 
 // Warning 
-{ message: "Already subscribed", type: 'info' }
+{ "message": "Already subscribed", "type": "info" }
 
 // No Good
-{ message: "Newsletter database is down", type: 'error' }
+{ "message": "Newsletter database is down", "type": "error" }
 ```
 
 ## Change log
@@ -92,7 +100,6 @@ If you discover any security related issues, please contact [Willem Van Bockstal
 - [All Contributors](../../contributors)
 
 ## About Spatie
-
 Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
 
 ## License
