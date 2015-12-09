@@ -73,13 +73,13 @@ If you're using the default response keys a json response with these keys is exp
 
 ```js
 // All Good
-{ "message": "Subscription is done", "type": "success" }
+{"message":"Subscription is done", "type":"success"}
 
 // Warning 
-{ "message": "Already subscribed", "type": "info" }
+{"message":"Already subscribed", "type":"info"}
 
 // No Good
-{ "message": "Newsletter database is down", "type": "error" }
+{"message":"Newsletter database is down", "type":"error"}
 ```
 
 ## Change log
