@@ -28,7 +28,7 @@ class NewsletterForm {
      * @param {object} options.cssClasses
      * @param {object} options.errorMessages
      */
-    constructor({$form, $email, $message, responseKeys, cssClasses, errorMessages}) {
+    constructor({$form, $email, $message, responseKeys, cssClasses, errorMessages} = {}) {
         this.$form = $form || $('[data-newsletter]');
         this.$email = $email || $('[data-newsletter-email]');
         this.$message = $message || $('[data-newsletter-message]'),
