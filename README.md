@@ -28,7 +28,7 @@ The first step is to create a form that looks like this:
 
 ```html
 <form data-newsletter method="POST" action="...">
-    <input data-newsletter-email type="email">
+    <input data-newsletter-email type="email" name="email">
     <button>Subscribe</button>
 </form>
 
