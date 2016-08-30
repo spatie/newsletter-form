@@ -41,7 +41,7 @@ The first step is to create a form that looks like this:
 If you're using the defaults, the easiest way to use the component is to just new it up.
 
 ```es6
-const NewsletterForm = require('newsletter-form');
+import NewsletterForm from 'newsletter-form';
 
 new NewsletterForm();
 ```
