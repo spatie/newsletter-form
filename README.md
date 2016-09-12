@@ -29,7 +29,7 @@ The first step is to create a form that looks like this:
 ```html
 <form data-newsletter method="POST" action="...">
     <input data-newsletter-email type="email" name="email">
-    <button>Subscribe</button>
+    <button data-newsletter-button>Subscribe</button>
 </form>
 
 <div data-newsletter-message 
@@ -52,6 +52,7 @@ Wanna do something special? You can customize the behaviour by passing one or mo
 const options = {
     $form: $('[data-newsletter-custom-form]'),
     $email: $('[data-newsletter-custom-email]'),
+    $button: $('[data-newsletter-custom-button]'),
     $message: $('[data-newsletter-message]'),
     responseKeys: {message: "customMessageField", type: "customTypeField"},
     cssClasses: {error: "-custom-error", success: "-custom-success"},

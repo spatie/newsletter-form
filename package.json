@@ -1,6 +1,6 @@
 {
   "name": "newsletter-form",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "Client-side script for newsletter subscription and response messages",
   "main": "lib/index.js",
   "scripts": {

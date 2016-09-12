@@ -24,14 +24,17 @@ class NewsletterForm {
      * @param {object} options
      * @param {JQuery} options.$form
      * @param {JQuery} options.$email
+     * @param {JQuery} options.$button
+     * @param {JQuery} options.$message
      * @param {object} options.responseKeys
      * @param {object} options.cssClasses
      * @param {object} options.errorMessages
      */
-    constructor({$form, $email, $message, responseKeys, cssClasses, errorMessages} = {}) {
+    constructor({$form, $email, $button, $message, responseKeys, cssClasses, errorMessages} = {}) {
         this.$form = $form || $('[data-newsletter]');
         this.$email = $email || $('[data-newsletter-email]');
-        this.$message = $message || $('[data-newsletter-message]'),
+        this.$button = $button || $('[data-newsletter-button]');
+        this.$message = $message || $('[data-newsletter-message]');
 
         this.responseKeys = merge({
             message: 'message',
@@ -73,6 +76,7 @@ class NewsletterForm {
             }
 
             let responseProperties = {};
+            this.disableButton();
 
             $.ajax({
                 type: 'POST',
@@ -86,7 +90,8 @@ class NewsletterForm {
                     responseProperties.message = this.$message.data('newsletter-error-ajax') || this.errorMessages.subscriptionError;
                 },
                 complete: () => {
-                    this.showMessage(responseProperties.message, responseProperties.type || ResponseType.ERROR);
+                    this.showMessage(responseProperties.message, responseProperties.type || ResponseType.ERROR)
+                        .enableButton();
                 },
             });
         });
@@ -125,6 +130,34 @@ class NewsletterForm {
             .removeClass(this.getAllCssClasses())
             .html('')
             .hide();
+
+        return this;
+    }
+
+    /**
+     * Disable the button.
+     *
+     * @protected
+     *
+     * @returns {NewsletterForm}
+     */
+    disableButton() {
+        this.$button
+            .attr('disabled', true);
+
+        return this;
+    }
+
+    /**
+     * Enable the button.
+     *
+     * @protected
+     *
+     * @returns {NewsletterForm}
+     */
+    enableButton() {
+        this.$button
+            .removeAttr('disabled');
 
         return this;
     }
