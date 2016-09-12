@@ -50,10 +50,10 @@ Wanna do something special? You can customize the behaviour by passing one or mo
 
 ```es6
 const options = {
-    $form: $('[data-newsletter-custom-form]'),
-    $email: $('[data-newsletter-custom-email]'),
-    $button: $('[data-newsletter-custom-button]'),
-    $message: $('[data-newsletter-message]'),
+    $form = $form || $('.js-newsletter');
+    $email = $email || $('.js-newsletter-email');
+    $button = $button || $('.js-newsletter-button');
+    $message = $message || $('.js-newsletter-message');
     responseKeys: {message: "customMessageField", type: "customTypeField"},
     cssClasses: {error: "-custom-error", success: "-custom-success"},
 };

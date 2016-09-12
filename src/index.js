@@ -31,10 +31,10 @@ class NewsletterForm {
      * @param {object} options.errorMessages
      */
     constructor({$form, $email, $button, $message, responseKeys, cssClasses, errorMessages} = {}) {
-        this.$form = $form || $('[data-newsletter]');
-        this.$email = $email || $('[data-newsletter-email]');
-        this.$button = $button || $('[data-newsletter-button]');
-        this.$message = $message || $('[data-newsletter-message]');
+        this.$form = $form || $('.js-newsletter');
+        this.$email = $email || $('.js-newsletter-email');
+        this.$button = $button || $('.js-newsletter-button');
+        this.$message = $message || $('.js-newsletter-message');
 
         this.responseKeys = merge({
             message: 'message',

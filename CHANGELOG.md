@@ -2,6 +2,11 @@
 
 All Notable changes to `newsletter-form` will be documented in this file
 
+## 2.0.1
+
+### Changed
+- Default DOM classes
+
 ## 2.0.0
 
 ### Changed
