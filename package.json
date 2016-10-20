@@ -1,6 +1,6 @@
 {
   "name": "newsletter-form",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Client-side script for newsletter subscription and response messages",
   "main": "lib/index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/spatie_custom/newsletter-form",
   "peerDependencies": {
-    "jquery": "^2.1.4"
+      "jquery": "^2.1.4 || ^3.0.0"
   },
   "devDependencies": {
     "babel": "^6.0.0",
