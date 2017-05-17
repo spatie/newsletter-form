@@ -19,7 +19,14 @@ npm set ca null
 Or you can require the package straight from GitHub:
 
 ```bash
-npm install spatie-custom/newsletter-form
+npm install spatie-custom/newsletter-form --save
+```
+
+or
+
+
+```bash
+yarn add spatie-custom/newsletter-form
 ```
 
 ## Usage
