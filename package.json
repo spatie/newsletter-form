@@ -39,6 +39,6 @@
   },
   "dependencies": {
     "email-validator": "^1.0.3",
-    "lodash.merge": "^3.3.2"
+    "lodash.merge": "^4.6.2"
   }
 }
