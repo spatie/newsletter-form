@@ -8,7 +8,7 @@ Client-side handling of newsletter subscriptions via ajax. Validates email and s
 
 ## Support us
 
-[![Image](https://github-ads.s3.eu-central-1.amazonaws.com/newsletter-form.jpg)](https://spatie.be/github-ad-click/newsletter-form)
+[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/newsletter-form.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/newsletter-form)
 
 We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
 
